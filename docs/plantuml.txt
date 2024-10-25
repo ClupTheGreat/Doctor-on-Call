@@ -1,0 +1,78 @@
+@startuml
+'Planttext.com UML code
+entity Users {
+  * user_id : INTEGER <<PK>>
+  --
+  email : VARCHAR(255)
+  password_hash : VARCHAR(255)
+  first_name : VARCHAR(100)
+  last_name : VARCHAR(100)
+  date_of_birth : DATE
+  gender : VARCHAR(10)
+  created_at : TIMESTAMP
+  last_login : TIMESTAMP
+}
+
+entity User_Login {
+  * login_id : INTEGER <<PK>>
+  --
+  user_id : INTEGER <<FK>>
+  login_time : TIMESTAMP
+  ip_address : VARCHAR(45)
+  device_info : VARCHAR(255)
+  is_successful : BOOLEAN
+}
+
+entity Diagnosis {
+  * diagnosis_id : INTEGER <<PK>>
+  --
+  user_id : INTEGER <<FK>>
+  start_time : TIMESTAMP
+  end_time : TIMESTAMP
+  diagnosis_result : VARCHAR(255)
+  status : VARCHAR(50)
+}
+
+entity Questions {
+  * question_id : INTEGER <<PK>>
+  --
+  question_text : TEXT
+  category : VARCHAR(100)
+  created_at : TIMESTAMP
+}
+
+entity Answers {
+  * answer_id : INTEGER <<PK>>
+  --
+  question_id : INTEGER <<FK>>
+  answer_text : TEXT
+  next_question_id : INTEGER <<FK>>
+  created_at : TIMESTAMP
+}
+
+entity User_Responses {
+  * response_id : INTEGER <<PK>>
+  --
+  diagnosis_id : INTEGER <<FK>>
+  question_id : INTEGER <<FK>>
+  answer_id : INTEGER <<FK>>
+  timestamp : TIMESTAMP
+}
+
+entity Security_Audit {
+  * audit_id : INTEGER <<PK>>
+  --
+  user_id : INTEGER <<FK>>
+  event_type : VARCHAR(50)
+  event_details : TEXT
+  event_time : TIMESTAMP
+}
+
+Users ||--o{ User_Login : "has"
+Users ||--o{ Diagnosis : "has"
+Diagnosis ||--o{ User_Responses : "contains"
+Questions ||--o{ Answers : "contains"
+Questions ||--o{ User_Responses : "has"
+Answers ||--o{ User_Responses : "selected"
+Users ||--o{ Security_Audit : "triggers"
+@enduml
