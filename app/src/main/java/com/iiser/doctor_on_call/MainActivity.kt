@@ -9,7 +9,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.iiser.doctor_on_call.auth.presentation.login.ui.LoginScreen
 import com.iiser.doctor_on_call.core.MainAppViewModel
 import com.iiser.doctor_on_call.core.MainScreen
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainAppViewModel by viewModels()
