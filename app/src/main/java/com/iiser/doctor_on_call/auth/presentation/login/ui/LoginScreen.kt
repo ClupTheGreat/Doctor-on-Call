@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,16 +25,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.iiser.doctor_on_call.MainScreen
-
+import com.iiser.doctor_on_call.auth.presentation.login.viewModel.LoginViewModel
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel()
+) {
 
-    viewModelFactory {  }
+
 
     var username by remember {
         mutableStateOf("")
@@ -45,6 +50,8 @@ fun LoginScreen() {
     var checked by remember {
         mutableStateOf(true)
     }
+    val uiState by viewModel.uiState.collectAsState()
+
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -60,7 +67,10 @@ fun LoginScreen() {
         )
         Spacer(modifier = Modifier.padding(20.dp))
         OutlinedTextField(
-            value = username, onValueChange = {},
+            value = uiState.userName ?: "",
+            onValueChange = {
+                            viewModel.onUsernameChanged(it)
+            },
             label = { Text(text = "Username")},
             modifier = Modifier
                 .padding(start = 30.dp, top = 10.dp, end = 30.dp)
@@ -68,12 +78,19 @@ fun LoginScreen() {
         )
 
         OutlinedTextField(
-            value = password, onValueChange = {},
+//            TODO Implement trailing icon for password visibility when clicked
+            value = password,
+            onValueChange = {
+                    password = it
+                          viewModel.onPasswordChanged(it)
+            },
+            visualTransformation = PasswordVisualTransformation(),
             label = { Text(text = "Password")},
             modifier = Modifier
                 .padding(start = 30.dp, end = 30.dp)
-                .fillMaxWidth()
-                )
+                .fillMaxWidth(),
+
+        )
 
         Row(modifier = Modifier
             .padding(start = 30.dp, end = 30.dp)
@@ -94,7 +111,10 @@ fun LoginScreen() {
             Checkbox(checked = checked, onCheckedChange = {checked = it})
         }
 
-        OutlinedButton(onClick = {},
+        OutlinedButton(
+            onClick = {
+                      viewModel.login(username, password)
+            },
             modifier = Modifier
                 .padding(start = 30.dp, end = 30.dp)
                 .fillMaxWidth()
