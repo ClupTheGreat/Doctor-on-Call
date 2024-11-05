@@ -1,12 +1,10 @@
-package com.iiser.doctor_on_call.auth.presentation.login.viewModel
+package com.iiser.doctor_on_call.auth.presentation.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiser.doctor_on_call.auth.domain.login.LoginUseCase
 import com.iiser.doctor_on_call.core.data.AppErrors
 import com.iiser.doctor_on_call.core.data.DoctorOnCallUiState
-import com.iiser.doctor_on_call.core.data.UserProfile
-import com.iiser.doctor_on_call.core.data.UserRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

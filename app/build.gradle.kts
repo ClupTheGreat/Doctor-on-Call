@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 
     testImplementation(libs.junit)
@@ -78,6 +79,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    val nav_version = "2.8.3"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
 
 
