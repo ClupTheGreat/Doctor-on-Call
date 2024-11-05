@@ -1,73 +1,67 @@
-package com.iiser.doctor_on_call.auth.presentation.login.ui
+package com.iiser.doctor_on_call.auth.presentation.signup.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-//import com.iiser.doctor_on_call.MainScreen
-import com.iiser.doctor_on_call.auth.presentation.login.viewmodel.LoginViewModel
+import com.iiser.doctor_on_call.auth.presentation.signup.viewmodel.SignUpViewModel
+import com.iiser.doctor_on_call.core.MainScreen
+
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel(),
-    navController: NavController
+fun SignUpScreen(
+    viewModel: SignUpViewModel = hiltViewModel(),
+//    navController: NavController
 ) {
-
-
-
     var username by remember {
         mutableStateOf("")
     }
     var password by remember {
         mutableStateOf("")
     }
-
-    var checked by remember {
-        mutableStateOf(true)
+    var email by remember {
+        mutableStateOf("")
     }
-    val uiState by viewModel.uiState.collectAsState()
-
+    var phone_number by remember {
+        mutableStateOf(null)
+    }
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White),
-        ) {
+        .background(Color.White)
+    ){
         Spacer(modifier = Modifier.padding(70.dp))
         Text(
-            text = AnnotatedString("Login"),
+            text = AnnotatedString("Sign Up"),
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(30.dp)
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+
         OutlinedTextField(
-            value = uiState.userName ?: "",
+            value = "",//uiState.userName ?: "",
             onValueChange = {
-                            viewModel.onUsernameChanged(it)
+//                viewModel.onUsernameChanged(it)
             },
             label = { Text(text = "Username")},
             modifier = Modifier
@@ -79,8 +73,8 @@ fun LoginScreen(
 //            TODO Implement trailing icon for password visibility when clicked
             value = password,
             onValueChange = {
-                    password = it
-                          viewModel.onPasswordChanged(it)
+                password = it
+//                viewModel.onPasswordChanged(it)
             },
             visualTransformation = PasswordVisualTransformation(),
             label = { Text(text = "Password")},
@@ -88,38 +82,39 @@ fun LoginScreen(
                 .padding(start = 30.dp, end = 30.dp)
                 .fillMaxWidth(),
 
-        )
-
-        Row(modifier = Modifier
-            .padding(start = 30.dp, end = 30.dp)
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-
-
-        ) {
-            Text(
-                text = AnnotatedString("Sign Up")
             )
-            Spacer(modifier = Modifier
-                .weight(1f)
-            )
-            Text(
-                text = AnnotatedString("Remember Me"))
-            Checkbox(checked = checked, onCheckedChange = {checked = it})
-        }
 
-        OutlinedButton(
-            onClick = {
-                      viewModel.login(username, password)
+
+        OutlinedTextField(
+            value = "",//uiState.userName ?: "",
+            onValueChange = {
+//                viewModel.onUsernameChanged(it)
             },
+            label = { Text(text = "Email")},
             modifier = Modifier
                 .padding(start = 30.dp, end = 30.dp)
                 .fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = "",//uiState.userName ?: "",
+            onValueChange = {
+//                viewModel.onUsernameChanged(it)
+            },
+            label = { Text(text = "Phone Number")},
+            modifier = Modifier
+                .padding(start = 30.dp, end = 30.dp)
+                .fillMaxWidth()
+        )
+
+        OutlinedButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(start = 30.dp, end = 30.dp, top = 10.dp)
+                .fillMaxWidth()
             ) {
-            Text(text = "Login")
-
+            Text(text = "Sign Up")
         }
-
     }
+
 }
