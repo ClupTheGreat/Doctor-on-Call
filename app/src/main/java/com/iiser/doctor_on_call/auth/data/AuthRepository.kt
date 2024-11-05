@@ -1,7 +1,6 @@
 package com.iiser.doctor_on_call.auth.data
 
-import com.iiser.doctor_on_call.core.data.DoctorOnCallUiState
-import com.iiser.doctor_on_call.core.data.UserRole
+import com.iiser.doctor_on_call.auth.domain.login.UserRole
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor() : AuthRepositoryInterface {
@@ -22,7 +21,7 @@ class AuthRepository @Inject constructor() : AuthRepositoryInterface {
 //       TODO: Add a query to get data from backend with user data, for now using test data
        val username = "TestUser"
         val user_id = "0001"
-        val userRole:UserRole = UserRole.USER
+        val userRole: UserRole = UserRole.USER
 
         gatheredData = mutableListOf<Any>(username, user_id, userRole)
        return gatheredData
