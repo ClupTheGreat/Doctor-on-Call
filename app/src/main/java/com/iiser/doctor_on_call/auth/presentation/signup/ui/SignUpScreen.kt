@@ -30,7 +30,7 @@ import com.iiser.doctor_on_call.core.MainScreen
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = hiltViewModel(),
-//    navController: NavController
+    navController: NavController
 ) {
     var username by remember {
         mutableStateOf("")
@@ -61,6 +61,7 @@ fun SignUpScreen(
         OutlinedTextField(
             value = "",//uiState.userName ?: "",
             onValueChange = {
+                            viewModel.onUsernameChange(it)
 //                viewModel.onUsernameChanged(it)
             },
             label = { Text(text = "Username")},
@@ -73,7 +74,7 @@ fun SignUpScreen(
 //            TODO Implement trailing icon for password visibility when clicked
             value = password,
             onValueChange = {
-                password = it
+                            viewModel.onPasswordChange(it)
 //                viewModel.onPasswordChanged(it)
             },
             visualTransformation = PasswordVisualTransformation(),
@@ -87,7 +88,7 @@ fun SignUpScreen(
 
         OutlinedTextField(
             value = "",//uiState.userName ?: "",
-            onValueChange = {
+            onValueChange = { viewModel.onEmailChange(it)
 //                viewModel.onUsernameChanged(it)
             },
             label = { Text(text = "Email")},
@@ -98,7 +99,7 @@ fun SignUpScreen(
 
         OutlinedTextField(
             value = "",//uiState.userName ?: "",
-            onValueChange = {
+            onValueChange = {viewModel.onPhoneNumber(it)
 //                viewModel.onUsernameChanged(it)
             },
             label = { Text(text = "Phone Number")},

@@ -43,13 +43,13 @@ class MainActivity : ComponentActivity() {
 //    }
 //}
 
-@Preview
-@Composable
-fun MainScreenPreview(){
-    MainScreen {
-        SignUpScreen()
-    }
-}
+//@Preview
+//@Composable
+//fun MainScreenPreview(){
+//    MainScreen {
+//        SignUpScreen()
+//    }
+//}
 
 
 

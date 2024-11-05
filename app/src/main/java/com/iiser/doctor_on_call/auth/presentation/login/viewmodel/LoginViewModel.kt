@@ -3,8 +3,8 @@ package com.iiser.doctor_on_call.auth.presentation.login.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiser.doctor_on_call.auth.domain.login.LoginUseCase
-import com.iiser.doctor_on_call.core.data.AppErrors
-import com.iiser.doctor_on_call.core.data.DoctorOnCallUiState
+import com.iiser.doctor_on_call.auth.domain.login.DoctorOnCallUiState
+import com.iiser.doctor_on_call.auth.domain.login.LoginPageErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,25 +34,26 @@ class LoginViewModel @Inject constructor(
 
     fun onPasswordChanged(password: String) {
         if (password.length < 5){
-            _uiState.value.errorMessage.toMutableList().apply { add(AppErrors.SHORT_PASSWORD) }
+            _uiState.value.errorMessage.toMutableList().apply { add(LoginPageErrors.SHORT_PASSWORD) }
         } else if (password == "12345") {
-            _uiState.value.errorMessage.toMutableList().apply { add(AppErrors.UNSAFE_PASSWORD) }
+            _uiState.value.errorMessage.toMutableList().apply { add(LoginPageErrors.UNSAFE_PASSWORD) }
         } else if (password.length > 5) {
-            if (AppErrors.SHORT_PASSWORD in _uiState.value.errorMessage){
-                _uiState.value.errorMessage.toMutableList().remove(AppErrors.SHORT_PASSWORD)
+            if (LoginPageErrors.SHORT_PASSWORD in _uiState.value.errorMessage){
+                _uiState.value.errorMessage.toMutableList().remove(LoginPageErrors.SHORT_PASSWORD)
             }
         } else if (password != "12345") {
-            if (AppErrors.SHORT_PASSWORD in _uiState.value.errorMessage){
-                _uiState.value.errorMessage.toMutableList().remove(AppErrors.SHORT_PASSWORD)
+            if (LoginPageErrors.SHORT_PASSWORD in _uiState.value.errorMessage){
+                _uiState.value.errorMessage.toMutableList().remove(LoginPageErrors.SHORT_PASSWORD)
             }
         }
     }
 
     fun login(username: String, password: String ){
 
-        if (_uiState.value.errorMessage == listOf(AppErrors.NO_ERROR)){
+        if (_uiState.value.errorMessage == listOf(LoginPageErrors.NO_ERROR)){
             viewModelScope.launch {
-                _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = listOf(AppErrors.NO_ERROR))
+                _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = listOf(
+                    LoginPageErrors.NO_ERROR))
 
                 val result = loginUseCase.testLoginUseCaseFunction(username, password)
                 println(result)

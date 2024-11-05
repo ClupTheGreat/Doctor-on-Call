@@ -1,6 +1,7 @@
 package com.iiser.doctor_on_call.auth.presentation.login.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,10 +31,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 //import com.iiser.doctor_on_call.MainScreen
 import com.iiser.doctor_on_call.auth.presentation.login.viewmodel.LoginViewModel
+import com.iiser.doctor_on_call.core.screen.Screen
+
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    onNavigateToSignUp: () -> Unit
 ) {
 
 
@@ -79,8 +83,8 @@ fun LoginScreen(
 //            TODO Implement trailing icon for password visibility when clicked
             value = password,
             onValueChange = {
-                    password = it
-                          viewModel.onPasswordChanged(it)
+                password = it
+                viewModel.onPasswordChanged(it)
             },
             visualTransformation = PasswordVisualTransformation(),
             label = { Text(text = "Password")},
@@ -98,20 +102,24 @@ fun LoginScreen(
 
 
         ) {
-            Text(
-                text = AnnotatedString("Sign Up")
+            Text(modifier = Modifier
+                .clickable { onNavigateToSignUp() },
+                text = AnnotatedString("Sign Up"),
+                color = Color.Blue
             )
+
             Spacer(modifier = Modifier
                 .weight(1f)
             )
             Text(
-                text = AnnotatedString("Remember Me"))
+                text = AnnotatedString("Remember Me")
+            )
             Checkbox(checked = checked, onCheckedChange = {checked = it})
         }
 
         OutlinedButton(
             onClick = {
-                      viewModel.login(username, password)
+                viewModel.login(username, password)
             },
             modifier = Modifier
                 .padding(start = 30.dp, end = 30.dp)
