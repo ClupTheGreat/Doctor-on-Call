@@ -16,4 +16,5 @@ sealed class Screen(val route: String) {
             return "results_page/$jsonString"
         }
     }
+    object BodySelectPage : Screen("body_select")
 }
