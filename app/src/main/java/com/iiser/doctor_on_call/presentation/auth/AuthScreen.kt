@@ -84,29 +84,35 @@ fun AuthScreen (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 24.dp, bottom = 0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            //horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(
                 modifier = Modifier
-                    .height(62.dp)
+                    .height(120.dp)
             )
 
             Text(
                 "Welcome to",
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
+                color = Color.White,
+                modifier = Modifier
+                    .padding(start = 24.dp)
             )
 
             Text(
                 "Doctor On Call,",
                 style = MaterialTheme.typography.headlineLarge,
-                color = Color.White
+                color = Color.White,
+                modifier = Modifier
+                    .padding(start = 24.dp)
             )
 
             Text(
                 "Sign in-up to get self diagnosed in minutes",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.White
+                color = Color.White,
+                modifier = Modifier
+                    .padding(start = 24.dp)
             )
 
             Spacer(
@@ -119,7 +125,7 @@ fun AuthScreen (
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
                     .background(mainSectionBackgroundColor)
-                    .padding(15.dp)
+                    .padding(24.dp)
             ) {
 
                 Row (
@@ -168,6 +174,11 @@ fun AuthScreen (
 
                     Spacer(modifier = Modifier.width(8.dp))
                 }
+
+                Spacer(
+                    modifier = Modifier
+                        .height(32.dp)
+                )
 
                 OutlinedTextField(
                     value = uiState.email,
@@ -235,9 +246,9 @@ fun AuthScreen (
                                 Icon(
                                     painter = painterResource(
                                         id = if (confirmPasswordVisible)
-                                            R.drawable.baseline_lock_24
+                                            R.drawable.baseline_remove_red_eye_24
                                         else
-                                            R.drawable.baseline_lock_24
+                                            R.drawable.baseline_remove_red_eye_24
                                     ),
                                     contentDescription = if (confirmPasswordVisible)
                                         "Hide password"
@@ -281,7 +292,7 @@ fun AuthScreen (
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = Color(0xFF5856D6)
                     )
                 ) {
                     Text(if (isLoginMode) "Login" else "Register")
