@@ -6,31 +6,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.iiser.doctor_on_call.auth.presentation.login.ui.LoginScreen
-import com.iiser.doctor_on_call.auth.presentation.signup.ui.SignUpScreen
-import com.iiser.doctor_on_call.core.MainAppViewModel
-import com.iiser.doctor_on_call.core.MainScreen
-import com.iiser.doctor_on_call.core.navigation.Navigation
+import androidx.navigation.compose.rememberNavController
+import com.iiser.doctor_on_call.presentation.navigation.AppNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainAppViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
+            val navController = rememberNavController()
+            AppNavGraph(navController = navController)
 
-//            With Navigation navhost
-            Navigation()
-
-//            OLD CODE
-//            MainScreen_act { LoginScreen()}
-//             MainScreen(){
-//                 LoginScreen()
-//             }
         }
     }
 }
