@@ -41,7 +41,7 @@ import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
 fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
     userName: String = "John",
-    onNavigateToQuizPageScreen: () -> Unit
+    onNavigateToBodySelectScreen: () -> Unit
 //TODO  include some navigation code
 ){
     Box(
@@ -120,7 +120,7 @@ fun DashboardScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { onNavigateToQuizPageScreen() },
+                onClick = { onNavigateToBodySelectScreen() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)

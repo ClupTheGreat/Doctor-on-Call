@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
 import com.iiser.doctor_on_call.presentation.auth.AuthScreen
+import com.iiser.doctor_on_call.presentation.bodySelect.BodySelectScreen
 import com.iiser.doctor_on_call.presentation.dashboard.DashboardScreen
 import com.iiser.doctor_on_call.presentation.quiz.QuizScreen
 import com.iiser.doctor_on_call.presentation.results.ResultsScreen
@@ -25,13 +26,14 @@ fun AppNavGraph(navController: NavHostController) {
         composable(Screen.Auth.route){
             AuthScreen(
                 onNavigateToDashboardScreen = { navController.navigate(Screen.Dashboard.route) }
+                // onNavigateToDashboardScreen = { navController.navigate(Screen.BodySelectPage.route) }
             )
         }
 
         composable(Screen.Dashboard.route){
             DashboardScreen(
 
-                onNavigateToQuizPageScreen = { navController.navigate(Screen.QuizPage.route) }
+                onNavigateToBodySelectScreen = { navController.navigate(Screen.BodySelectPage.route) }
 
             )
         }
@@ -60,6 +62,12 @@ fun AppNavGraph(navController: NavHostController) {
             }
 
             ResultsScreen(result = diagnosisResult)
+        }
+
+        composable(Screen.BodySelectPage.route){
+            BodySelectScreen(showHitboxes = false, onNavigateToQuizPageScreen = { navController.navigate(Screen.QuizPage.route) })
+
+
         }
     }
 
