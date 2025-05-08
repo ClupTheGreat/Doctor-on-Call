@@ -39,11 +39,13 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(Screen.QuizPage.route){
+            val selectedRegionsText = it.arguments?.getString("selectedRegionsText")
             QuizScreen(
-                onBackClick = { navController.popBackStack() }, // Handles back navigation
+                selectedRegionsText = selectedRegionsText,
+                onBackClick = { navController.popBackStack() },
                 onComplete = { resultData ->
-                    val json = Uri.encode(Gson().toJson(resultData)) // Convert data to JSON and encode
-                    navController.navigate("results_page/$json") // Navigate with encoded data
+                    val json = Uri.encode(Gson().toJson(resultData))
+                    navController.navigate("results_page/$json")
                 }
             )
         }
@@ -65,7 +67,7 @@ fun AppNavGraph(navController: NavHostController) {
         }
 
         composable(Screen.BodySelectPage.route){
-            BodySelectScreen(showHitboxes = false, onNavigateToQuizPageScreen = { navController.navigate(Screen.QuizPage.route) })
+            BodySelectScreen(showHitboxes = false, controller = navController)
 
 
         }

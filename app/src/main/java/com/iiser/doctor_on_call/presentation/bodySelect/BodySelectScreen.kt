@@ -1,5 +1,7 @@
 package com.iiser.doctor_on_call.presentation.bodySelect
 
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,12 +36,14 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import com.iiser.doctor_on_call.R
 import com.iiser.doctor_on_call.presentation.screens.Screen
 import kotlin.math.pow
@@ -1336,6 +1340,8 @@ import kotlin.math.sqrt
 //    BodySelectScreen()
 //}
 
+
+// Class to define the body part, Single Region being singular body part eg: Head, Paired meaning multiples eg: arms
 sealed class BodyRegion(
     val displayName: String,
     val selectionKey: String // Used to group related regions
@@ -1354,7 +1360,7 @@ sealed class BodyRegion(
     ) : BodyRegion(displayName, displayName)
 }
 
-// Data class for defining clickable areas
+// Hitbox for body parts
 data class BodyPartBounds(
     val normalizedX: Float,  // x-coordinate (0.0-1.0)
     val normalizedY: Float,  // y-coordinate (0.0-1.0)
@@ -1362,7 +1368,9 @@ data class BodyPartBounds(
     val hitboxRadius: Float = normalizedRadius * 1.5f  // larger hitbox for easier selection
 )
 
-// All body regions with paired regions moved further apart to prevent clipping
+// All body regions with paired regions approximate locations according to the emulator, to be changed in future.
+// TODO
+
 val bodyRegions = listOf(
     // Head area (single)
     BodyRegion.SingleRegion(
@@ -1442,14 +1450,17 @@ val bodyRegions = listOf(
 fun BodySelectScreen(
     // Added debug mode flag
     showHitboxes: Boolean,
-    onNavigateToQuizPageScreen: () -> Unit
+    controller: NavHostController
 ) {
+    val context = LocalContext.current
     // Observable list of selected body regions
     val selectedRegions = remember { mutableStateListOf<String>() }
 
     // Track the container size to calculate absolute coordinates
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
     val density = LocalDensity.current
+
+    var selectedRegionsText = "No regions selected"
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -1635,13 +1646,27 @@ fun BodySelectScreen(
 
                 // Button at the bottom
                 Button(
-                    onClick = { /* To be implemented later */ },
+                    onClick = { selectedRegionsText = if (selectedRegions.isEmpty()) {
+                        "No regions selected"
+                    } else {
+                        selectedRegions.joinToString(", ")
+                    }
+
+                        // Create and show toast with the selected regions
+
+                        Toast.makeText(context, selectedRegionsText, Toast.LENGTH_SHORT).show()
+
+                        if (selectedRegions.isNotEmpty()){
+                            controller.navigate("quiz_page/$selectedRegionsText")
+                        }
+
+                              },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp, vertical = 16.dp)
                         .height(56.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF58576D)
+                        containerColor = Color(0xFF6B4EFF)
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
