@@ -4,6 +4,9 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 
+    alias(libs.plugins.kotlinCompose)
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+
 }
 
 android {
@@ -43,7 +46,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
@@ -67,6 +70,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("androidx.room:room-runtime:2.7.1")
+    implementation("androidx.room:room-ktx:2.7.1")
 
 
     testImplementation(libs.junit)
@@ -84,6 +89,10 @@ dependencies {
 
     val nav_version = "2.8.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 
 
 

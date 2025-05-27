@@ -23,7 +23,7 @@ import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
 val cornerRadius = 20.dp
 
 @Composable
-fun DiagnosisResultItem(diagnosis: DiagnosisResultItemModel) {
+fun DiagnosisResultItem(diagnosis: DiagnosisResultItemModel, onClick:() -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,7 +35,7 @@ fun DiagnosisResultItem(diagnosis: DiagnosisResultItemModel) {
                     //radius = cornerRadius // Ensures ripple matches card shape
 
                 ), // Adds ripple effect on click
-                onClick = {  }
+                onClick = { onClick() }
             ),
 
         colors = CardDefaults.cardColors(
@@ -60,9 +60,9 @@ fun DiagnosisResultItem(diagnosis: DiagnosisResultItemModel) {
     }
 }
 
-@Preview
-@Composable
-fun DashboardResultItemPreview(){
-    val exampleItem = DiagnosisResultItemModel(1, "dd,nn,yy","Example Name","Example Treatment")
-    DiagnosisResultItem(exampleItem)
-}
+//@Preview
+//@Composable
+//fun DashboardResultItemPreview(){
+//    val exampleItem = DiagnosisResultItemModel(1, "dd,nn,yy","Example Name","Example Treatment")
+//    DiagnosisResultItem(exampleItem)
+//}

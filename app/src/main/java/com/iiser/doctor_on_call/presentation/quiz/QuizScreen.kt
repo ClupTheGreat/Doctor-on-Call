@@ -34,19 +34,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iiser.doctor_on_call.R
 import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
 
 @Composable
 fun QuizScreen(
     viewModel: QuizViewModel = hiltViewModel(),
-    onBackClick:() -> Unit,
-    onComplete:(DiagnosisResultItemModel?) -> Unit
+    onBackClick: () -> Unit,
+    onComplete: (DiagnosisResultItemModel?) -> Unit,
+    selectedRegionsText: String?
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(selectedRegionsText) {
+        selectedRegionsText?.let {
+            viewModel.filterQuestionsByRegions(it)
+        }
+    }
+
     val currentQuestion = viewModel.getCurrentQuestion()
+
+//    if (selectedRegionsText != null) {
+//        viewModel.filterQuestionsByRegions(selectedRegionsText)
+//    }
 
     Column(
         modifier = Modifier
@@ -161,7 +172,8 @@ fun QuizScreen(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        if (uiState.currentQuestionIndex == 5)
+                        //if (uiState.currentQuestionIndex == 5)
+                        if (uiState.currentQuestionIndex == uiState.filteredQuestions.lastIndex)
                             "Finish"
                         else
                             "Next"
