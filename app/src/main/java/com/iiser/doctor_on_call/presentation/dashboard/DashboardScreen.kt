@@ -41,7 +41,8 @@ import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
 fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
     userName: String = "John",
-    onNavigateToBodySelectScreen: () -> Unit
+    onNavigateToBodySelectScreen: () -> Unit,
+    onResultClick: (DiagnosisResultItemModel) -> Unit
 //TODO  include some navigation code
 ){
     Box(
@@ -143,6 +144,8 @@ fun DashboardScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
+            val pastDiagnoses = viewModel.pastDiagnoses
+
             LazyColumn (
                 modifier = Modifier
                     .fillMaxSize()
@@ -151,23 +154,23 @@ fun DashboardScreen(
                     .padding( start = 24.dp, end = 24.dp, top = 24.dp )
             ) {
 
-                val pastDiagnoses = listOf(
-                    DiagnosisResultItemModel(1, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(2, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(3, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(4, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(5, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(6, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(7, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(8, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(9, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(10, "dd,mm,yy","Example Name","Example Treatment"),
-                    DiagnosisResultItemModel(11, "dd,mm,yy","Example Name","Example Treatment")
-                )
+//                val pastDiagnoses = listOf(
+//                    DiagnosisResultItemModel(1, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(2, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(3, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(4, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(5, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(6, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(7, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(8, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(9, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(10, "dd,mm,yy","Example Name","Example Treatment"),
+//                    DiagnosisResultItemModel(11, "dd,mm,yy","Example Name","Example Treatment")
+//                )
 
                 items(pastDiagnoses) { item: DiagnosisResultItemModel ->
                     Spacer(modifier = Modifier.height(8.dp))
-                    DiagnosisResultItem(diagnosis = item)
+                    DiagnosisResultItem(diagnosis = item, onClick = { onResultClick(item) })
                 }
 
 

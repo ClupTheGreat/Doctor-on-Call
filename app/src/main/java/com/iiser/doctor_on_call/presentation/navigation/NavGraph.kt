@@ -4,11 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.iiser.doctor_on_call.data.model.DiagnosisResultItemModel
+import com.iiser.doctor_on_call.data.model.DiagnosisResultsDatabase
+import com.iiser.doctor_on_call.domain.repository.ResultRepository
 import com.iiser.doctor_on_call.presentation.auth.AuthScreen
 import com.iiser.doctor_on_call.presentation.bodySelect.BodySelectScreen
 import com.iiser.doctor_on_call.presentation.dashboard.DashboardScreen
@@ -19,9 +22,11 @@ import com.iiser.doctor_on_call.presentation.screens.Screen
 @Composable
 fun AppNavGraph(navController: NavHostController) {
 
+
     NavHost(
         navController = navController,
-        startDestination = Screen.Auth.route
+        // startDestination = Screen.Auth.route
+        startDestination = Screen.Dashboard.route
     ) {
         composable(Screen.Auth.route){
             AuthScreen(
@@ -33,7 +38,11 @@ fun AppNavGraph(navController: NavHostController) {
         composable(Screen.Dashboard.route){
             DashboardScreen(
 
-                onNavigateToBodySelectScreen = { navController.navigate(Screen.BodySelectPage.route) }
+                onNavigateToBodySelectScreen = { navController.navigate(Screen.BodySelectPage.route) },
+                onResultClick = { result ->
+                    val json = Uri.encode(Gson().toJson(result))
+                    navController.navigate("results_page/$json")
+                }
 
             )
         }
@@ -63,11 +72,12 @@ fun AppNavGraph(navController: NavHostController) {
                 Gson().fromJson(Uri.decode(it), DiagnosisResultItemModel::class.java)
             }
 
-            ResultsScreen(result = diagnosisResult)
+            ResultsScreen(result = diagnosisResult, onNavigateToDashboardScreen = {navController.navigate(Screen.Dashboard.route
+            )})
         }
 
         composable(Screen.BodySelectPage.route){
-            BodySelectScreen(showHitboxes = false, controller = navController)
+            BodySelectScreen(showHitboxes = true, controller = navController)
 
 
         }

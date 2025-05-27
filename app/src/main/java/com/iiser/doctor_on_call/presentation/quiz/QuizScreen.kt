@@ -46,7 +46,18 @@ fun QuizScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(selectedRegionsText) {
+        selectedRegionsText?.let {
+            viewModel.filterQuestionsByRegions(it)
+        }
+    }
+
     val currentQuestion = viewModel.getCurrentQuestion()
+
+//    if (selectedRegionsText != null) {
+//        viewModel.filterQuestionsByRegions(selectedRegionsText)
+//    }
 
     Column(
         modifier = Modifier
@@ -161,7 +172,8 @@ fun QuizScreen(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        if (uiState.currentQuestionIndex == 5)
+                        //if (uiState.currentQuestionIndex == 5)
+                        if (uiState.currentQuestionIndex == uiState.filteredQuestions.lastIndex)
                             "Finish"
                         else
                             "Next"
